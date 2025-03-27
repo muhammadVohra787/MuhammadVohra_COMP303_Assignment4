@@ -40,7 +40,9 @@ public class OrderController {
     public String registerUser(@RequestParam String username, @RequestParam String password, @RequestParam Long balance,
                                Model model) {
         try {
-            if (userService.findByUsername(username).isPresent()) {
+            Optional <User> existingUser = userService.findByUsername(username);
+        	if (existingUser != null && existingUser.isPresent())
+        	{
                 model.addAttribute("errorMessage", "Username already exists!");
                 return "register";
             }
